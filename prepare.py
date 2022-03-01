@@ -40,4 +40,20 @@ prep_titanic(dff).head()
 
 
 #Prepare Telco dataset function
+ddff = get_telco_data()
+
+def prep_telco(ddff):
+    ddff.total_charges = ddff.total_charges.replace(' ', np.nan).astype(float)
+    columns_drop = ['customer_id', 'payment_type_id', 'internet_service_type_id', 'contract_type_id']
+    ddff = ddff.drop(columns = columns_drop)
+    encode_cols = [col for col in ddff.columns if ddff[col].dtype == 'O']
+    for col in encode_cols:
+        dumb_df = pd.get_dummies(ddff[col], prefix = ddff[col].name, drop_first = True)
+        ddff = pd.concat([ddff, dumb_df], axis=1)
+        ddff = ddff.drop(columns=[col])
+    return ddff
+
+#verify returned cleaned dataframe
+prep_telco(ddff).head()
+
 
