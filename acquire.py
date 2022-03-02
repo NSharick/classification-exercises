@@ -3,8 +3,6 @@
 #imports#
 import numpy as np
 import pandas as pd
-import seaborn as sns
-from pydataset import data
 from env import get_db_url
 import os
 
@@ -21,8 +19,6 @@ def get_titanic_data():
     df = pd.read_sql('SELECT * FROM passengers', get_db_url('titanic_db'))
     df.to_csv(filename, index=False)
     return df  
-#Verify the data pulled correctly
-get_titanic_data().head()
 
 
 #Get Iris dataset from the database and include species name along with species ID
@@ -37,8 +33,6 @@ def get_iris_data():
     df = pd.read_sql('SELECT * FROM measurements JOIN species USING(species_id)', get_db_url('iris_db'))
     df.to_csv(filename, index=False)
     return df  
-#verify the data pulled correctly
-get_iris_data().head()
 
 
 #Get the Telco data from the database and join all four tables into the one dataframe
@@ -60,5 +54,3 @@ def get_telco_data():
     df = pd.read_sql(query, get_db_url('telco_churn'))
     df.to_csv(filename, index=False)
     return df  
-#verify data pulled correctly
-get_telco_data().head()
